@@ -1,7 +1,5 @@
-# WARNING: Beta, unstable, testing software
-This resin.io setup is based on the [Multi-protocol Packet Forwarder by Jac Kersing](https://github.com/kersing/packet_forwarder/tree/master/mp_pkt_fwd). His packet forwarder, as well as this resin.io setup, are changing constantly. You therefore need to `git pull origin master` and `git push -f resin master` at least once a week to make sure your gateway is running the latest software.
-
-If you want a stable gateway setup, stick to the [old poly-packet-forwarder resin.io setup](https://github.com/rayozzie/ttn-resin-gateway-rpi) for now. You will be able to update from the old one to this repo quite seamlessly in the future.
+# Introduction
+This resin.io setup is based on the [Multi-protocol Packet Forwarder by Jac Kersing](https://github.com/kersing/packet_forwarder/tree/master/mp_pkt_fwd).
 
 ## Difference between Poly-packet-forwarder and Multi-protocol-packet-forwarder
 mp-pkt-fwd uses the new protocolbuffers-over-mqtt-over-tcp protocol for gateways, as defined by TTN and used by the TTN kickstarter gateway. Using this protcol the gateway is authenticated, which means it is registered under a specific user and can thus be trusted. Because it uses TCP, the chance of packet loss is much lower than with the previous protocol that used UDP. Protocolbuffers packs the data in a compact binary mode into packets, using much less space than the plaintext json that was previously used. It should therefore consume less bandwidth.
