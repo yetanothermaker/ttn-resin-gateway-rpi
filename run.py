@@ -164,6 +164,8 @@ gateway_conf = {}
 gateway_conf['gateway_ID'] = my_eui
 gateway_conf['contact_email'] = os.getenv('GW_CONTACT_EMAIL', "")
 gateway_conf['description'] = description
+gateway_conf['forward_crc_error'] = True
+gateway_conf['forward_crc_valid'] = True
 
 # Use hardware GPS
 if(os.getenv('GW_GPS', False)==True):
@@ -205,11 +207,11 @@ if(os.getenv('SERVER_1_ENABLED', False)):
   server = {}
   if(os.getenv('SERVER_1_TYPE', "semtech")=="ttn"):
     server['serv_type'] = "ttn"
+    server['serv_gw_id'] = os.environ.get("SERVER_1_GWID")
+    server['serv_gw_key'] = os.environ.get("SERVER_1_GWKEY")
   server['server_address'] = os.environ.get("SERVER_1_ADDRESS")
-  server['serv_port_up'] = os.environ.get("SERVER_1_PORTUP")
-  server['serv_port_down'] = os.environ.get("SERVER_1_PORTDOWN")
-  server['serv_gw_id'] = os.environ.get("SERVER_1_GWID")
-  server['serv_gw_key'] = os.environ.get("SERVER_1_GWKEY")
+  server['serv_port_up'] = int(os.environ.get("SERVER_1_PORTUP"))
+  server['serv_port_down'] = int(os.environ.get("SERVER_1_PORTDOWN"))
   if(os.getenv('SERVER_1_ENABLED', "false")=="true"):
     server['serv_enabled'] = True
   else:
