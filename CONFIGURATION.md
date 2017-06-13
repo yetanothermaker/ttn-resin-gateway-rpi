@@ -2,15 +2,18 @@
 ##Required global variables
 * GW_ID required
 * GW_KEY required
-* GW_CONTACT_EMAIL required - default an empty string
-  The gateway owner's contact information.
+  This gateway ID and gateway Key for TTN will be used to fetch the gateway's information form the TTN console. When SERVER_TTN is true, this will also be used to conenct and forward packets to TTN.
 
 ##Optional global variables
+* GW_CONTACT_EMAIL optional - default an empty string
+  The gateway owner's contact information. Will be overridden by the value from the TTN console.
+* GW_DESCRIPTION optional - default an empty string
+  A description of this gateway. Will be overridden by the value from the TTN console.
 * GW_RESET_PIN - default 22
-  The physical pin number on the Raspberry Pi to which the concentrator's reset is connected. If you followed the [TTN-ZH instruction](https://github.com/ttn-zh/ic880a-gateway/wiki), or used [Gonzalo Casas' backplane board](https://www.tindie.com/stores/gnz/), this is most likely pin number 22. As pin 22 is the default value, you do not need to define it in this case.
+  The physical pin number on the Raspberry Pi to which the concentrator's reset is connected. See the [README](README.md) file for a description and a list of common values.
 * GW_GPS optional - default False
-  * If True, use the hardware GPS. 
-  * If False, 
+  * If true, use the hardware GPS. 
+  * If false, 
     use either fake gps if a location was configured in the TTN console, 
     otherwise try using fake gps with the reference location as set via environment variables, 
     otherwise don't send coordinates. 
@@ -22,10 +25,16 @@
   The longitude to use for fake gps if the coordinates are not set in the TTN console.
 * GW_REF_ALTITUDE optional - default 0
   The altitude to use for fake gps if the coordinates are not set in the TTN console.
+* GW_FWD_CRC_ERR optional - default false
+  Forward packets with an invalid CRC.
+* GW_FWD_CRC_VAL optional - default true.
+  Forward packets with a valid CRC.
+* GW_ANTENNA_GAIN optional - default 0.
+  Set this to the dBd gain of your antenna. The dBd value is the dBi value minus 2.15dB, ie. dBd = dBi-2.15. This is used to reduce the TX power of the concentrator to stay within the legal limits.
 
 ##Server variables
 All server variables are optional, but when a server is enabled, it is recommended to set all variables to configure it completely.
-* SERVER_TTN optional - default True
+* SERVER_TTN optional - default true
   Should the gateway connect to the TTN backend
   
 * SERVER_1_ENABLED optional - default false
@@ -54,6 +63,10 @@ All server variables are optional, but when a server is enabled, it is recommend
 * SERVER_3_GWID
 * SERVER_3_GWKEY
 * SERVER_3_DOWNLINK - default false
+
+## Note about boolean values
+
+Use `true` and `false` as lower case words to enable or disable features via environment variables. Any other format will not be interpreted correctly.
 
 #Logal debugging
 ```

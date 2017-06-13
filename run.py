@@ -76,7 +76,7 @@ print ("*** Fetching config from TTN account server")
 print ("*******************")
 
 # Define default configs
-description = ""
+description = os.getenv('GW_DESCRIPTION', "")
 placement = ""
 latitude = os.getenv('GW_REF_LATITUDE', 0)
 longitude = os.getenv('GW_REF_LONGITUDE', 0)
@@ -164,23 +164,37 @@ gateway_conf = {}
 gateway_conf['gateway_ID'] = my_eui
 gateway_conf['contact_email'] = os.getenv('GW_CONTACT_EMAIL', "")
 gateway_conf['description'] = description
-gateway_conf['forward_crc_error'] = True
-gateway_conf['forward_crc_valid'] = True
+gateway_conf['antenna_gain'] = float(os.getenv('GW_ANTENNA_GAIN', 0))
+
+if(os.getenv('GW_FWD_CRC_ERR', False)=="true"):
+  #default is False
+  gateway_conf['forward_crc_error'] = True
+
+if(os.getenv('GW_FWD_CRC_VAL', True)=="false"):
+  #default is True
+  gateway_conf['forward_crc_valid'] = False
+
+# Parse GW_GPS env var. It is a string, we need a boolean.
+gw_gps = os.getenv('GW_GPS', False)
+if(gw_gps=="true"):
+  gw_gps = True
+else:
+  gw_gps = False
 
 # Use hardware GPS
-if(os.getenv('GW_GPS', False)==True):
+if(gw_gps):
   print ("Using real GPS")
   gateway_conf['gps'] = True
   gateway_conf['fake_gps'] = False
   gateway_conf['gps_tty_path'] = os.getenv('GW_GPS_PORT', "/dev/ttyAMA0")
 # Use fake GPS with coordinates from TTN
-elif(os.getenv('GW_GPS', False)==False and latitude!=0 and longitude!=0):
+elif(gw_gps==False and latitude!=0 and longitude!=0):
   print ("Using fake GPS")
   gateway_conf['gps'] = True
   gateway_conf['fake_gps'] = True
-  gateway_conf['ref_latitude'] = latitude
-  gateway_conf['ref_longitude'] = longitude
-  gateway_conf['ref_altitude'] = altitude
+  gateway_conf['ref_latitude'] = float(latitude)
+  gateway_conf['ref_longitude'] = float(longitude)
+  gateway_conf['ref_altitude'] = float(altitude)
 # No GPS coordinates
 else:
   print ("Not sending coordinates")
@@ -192,7 +206,7 @@ else:
 gateway_conf['servers'] = []
 
 # Add TTN server
-if(os.getenv('SERVER_TTN', True)):
+if(os.getenv('SERVER_TTN', True)!="false"):
   server = {}
   server['serv_type'] = "ttn"
   server['server_address'] = router
@@ -203,7 +217,7 @@ if(os.getenv('SERVER_TTN', True)):
   gateway_conf['servers'].append(server)
 
 # Add up to 3 additional servers
-if(os.getenv('SERVER_1_ENABLED', False)):
+if(os.getenv('SERVER_1_ENABLED', "false")=="true"):
   server = {}
   if(os.getenv('SERVER_1_TYPE', "semtech")=="ttn"):
     server['serv_type'] = "ttn"
@@ -212,10 +226,7 @@ if(os.getenv('SERVER_1_ENABLED', False)):
   server['server_address'] = os.environ.get("SERVER_1_ADDRESS")
   server['serv_port_up'] = int(os.environ.get("SERVER_1_PORTUP"))
   server['serv_port_down'] = int(os.environ.get("SERVER_1_PORTDOWN"))
-  if(os.getenv('SERVER_1_ENABLED', "false")=="true"):
-    server['serv_enabled'] = True
-  else:
-    server['serv_enabled'] = False
+  server['serv_enabled'] = True
   if(os.getenv('SERVER_1_DOWNLINK', "false")=="true"):
     server['serv_down_enabled'] = True
   else:
@@ -226,15 +237,12 @@ if(os.getenv('SERVER_2_ENABLED', False)):
   server = {}
   if(os.getenv('SERVER_2_TYPE', "semtech")=="ttn"):
     server['serv_type'] = "ttn"
+    server['serv_gw_id'] = os.environ.get("SERVER_2_GWID")
+    server['serv_gw_key'] = os.environ.get("SERVER_2_GWKEY")
   server['server_address'] = os.environ.get("SERVER_2_ADDRESS")
-  server['serv_port_up'] = os.environ.get("SERVER_2_PORTUP")
-  server['serv_port_down'] = os.environ.get("SERVER_2_PORTDOWN")
-  server['serv_gw_id'] = os.environ.get("SERVER_2_GWID")
-  server['serv_gw_key'] = os.environ.get("SERVER_2_GWKEY")
-  if(os.getenv('SERVER_2_ENABLED', "false")=="true"):
-    server['serv_enabled'] = True
-  else:
-    server['serv_enabled'] = False
+  server['serv_port_up'] = int(os.environ.get("SERVER_2_PORTUP"))
+  server['serv_port_down'] = int(os.environ.get("SERVER_2_PORTDOWN"))
+  server['serv_enabled'] = True
   if(os.getenv('SERVER_2_DOWNLINK', "false")=="true"):
     server['serv_down_enabled'] = True
   else:
@@ -245,20 +253,16 @@ if(os.getenv('SERVER_3_ENABLED', False)):
   server = {}
   if(os.getenv('SERVER_3_TYPE', "semtech")=="ttn"):
     server['serv_type'] = "ttn"
+    server['serv_gw_id'] = os.environ.get("SERVER_3_GWID")
+    server['serv_gw_key'] = os.environ.get("SERVER_3_GWKEY")
   server['server_address'] = os.environ.get("SERVER_3_ADDRESS")
-  server['serv_port_up'] = os.environ.get("SERVER_3_PORTUP")
-  server['serv_port_down'] = os.environ.get("SERVER_3_PORTDOWN")
-  server['serv_gw_id'] = os.environ.get("SERVER_3_GWID")
-  server['serv_gw_key'] = os.environ.get("SERVER_3_GWKEY")
-  if(os.getenv('SERVER_3_ENABLED', "false")=="true"):
-    server['serv_enabled'] = True
-  else:
-    server['serv_enabled'] = False
+  server['serv_port_up'] = int(os.environ.get("SERVER_3_PORTUP"))
+  server['serv_port_down'] = int(os.environ.get("SERVER_3_PORTDOWN"))
+  server['serv_enabled'] = True
   if(os.getenv('SERVER_3_DOWNLINK', "false")=="true"):
     server['serv_down_enabled'] = True
   else:
     server['serv_down_enabled'] = False
-  
   gateway_conf['servers'].append(server)
 
 
@@ -267,6 +271,10 @@ if(os.getenv('SERVER_3_ENABLED', False)):
 local_conf = {'gateway_conf': gateway_conf}
 with open('local_conf.json', 'w') as the_file:
   the_file.write(json.dumps(local_conf, indent=4))
+
+
+# TODO: Cayenne monitoring script
+
 
 # Endless loop to reset and restart packet forwarder
 while True:
