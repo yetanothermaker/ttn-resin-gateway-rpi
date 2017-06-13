@@ -31,6 +31,8 @@
   Forward packets with a valid CRC.
 * GW_ANTENNA_GAIN optional - default 0.
   Set this to the dBd gain of your antenna. The dBd value is the dBi value minus 2.15dB, ie. dBd = dBi-2.15. This is used to reduce the TX power of the concentrator to stay within the legal limits.
+* CAYENNE_SCRIPT optional
+  When this variable is set to a Raspberry Pi Cayenne monitoring script, the script will be downloaded and executed. This allows monitoring of your gateway on Cayenne.
 
 ##Server variables
 All server variables are optional, but when a server is enabled, it is recommended to set all variables to configure it completely.

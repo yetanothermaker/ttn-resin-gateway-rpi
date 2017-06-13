@@ -7,6 +7,7 @@ Based on: https://github.com/rayozzie/ttn-resin-gateway-rpi/blob/master/run.sh
 import os
 import os.path
 import sys
+import stat
 import urllib2
 import time
 import uuid
@@ -273,7 +274,21 @@ with open('global_conf.json', 'w') as the_file:
   the_file.write(json.dumps(local_conf, indent=4))
 
 
-# TODO: Cayenne monitoring script
+# Cayenne monitoring script
+"""
+wget https://cayenne.mydevices.com/dl/rpi_lv7d88b029.sh
+sudo bash rpi_lv7d88b029.sh -v
+"""
+if(os.environ.get("CAYENNE_SCRIPT")!=None):
+  try:
+    response = urllib2.urlopen(os.environ.get("CAYENNE_SCRIPT"), timeout=30)
+    cayenne_script = response.read()
+    with open('rpi_cayenne.sh', 'w') as the_file:
+      the_file.write(cayenne_script)
+    os.chmod('rpi_cayenne.sh', stat.S_IEXEC)
+    subprocess.call(["./rpi_cayenne.sh"])
+  except urllib2.URLError as err: 
+    print ("Unable to fetch Cayenne script")
 
 
 # Endless loop to reset and restart packet forwarder
