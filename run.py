@@ -146,17 +146,18 @@ if(os.getenv('SERVER_TTN', True)):
 
 
 # Retrieve global_conf
-global_conf = ""
+sx1301_conf = {}
 try:
   response = urllib2.urlopen(frequency_plan_url, timeout=30)
   global_conf = response.read()
+  global_conf_object = json.loads(global_conf)
+  if('SX1301_conf' in global_conf_object):
+    sx1301_conf = global_conf_object['SX1301_conf']
 except urllib2.URLError as err: 
   print ("Unable to fetch global conf from Github")
   sys.exit(0)
 
-# Write global_coonf
-with open('global_conf.json', 'w') as the_file:
-  the_file.write(global_conf)
+sx1301_conf['antenna_gain'] = float(os.getenv('GW_ANTENNA_GAIN', 0))
 
 
 # Build local_conf
@@ -164,7 +165,6 @@ gateway_conf = {}
 gateway_conf['gateway_ID'] = my_eui
 gateway_conf['contact_email'] = os.getenv('GW_CONTACT_EMAIL', "")
 gateway_conf['description'] = description
-gateway_conf['antenna_gain'] = float(os.getenv('GW_ANTENNA_GAIN', 0))
 
 if(os.getenv('GW_FWD_CRC_ERR', False)=="true"):
   #default is False
@@ -266,10 +266,10 @@ if(os.getenv('SERVER_3_ENABLED', False)):
   gateway_conf['servers'].append(server)
 
 
-# Now write the local_conf out to a file
-# Write global_coonf
-local_conf = {'gateway_conf': gateway_conf}
-with open('local_conf.json', 'w') as the_file:
+# We merge the json objects from the global_conf and local_conf and save it to the global_conf.
+# Therefore there will not be a local_conf.json file.
+local_conf = {'SX1301_conf': sx1301_conf, 'gateway_conf': gateway_conf}
+with open('global_conf.json', 'w') as the_file:
   the_file.write(json.dumps(local_conf, indent=4))
 
 

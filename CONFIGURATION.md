@@ -42,8 +42,8 @@ All server variables are optional, but when a server is enabled, it is recommend
 * SERVER_1_ADDRESS
 * SERVER_1_PORTUP - only when using type semtech
 * SERVER_1_PORTDOWN - only when using type semtech
-* SERVER_1_GWID
-* SERVER_1_GWKEY
+* SERVER_1_GWID - only when using type ttn
+* SERVER_1_GWKEY - only when using type ttn
 * SERVER_1_DOWNLINK - default false
 
 * SERVER_2_ENABLED optional - default false
