@@ -224,8 +224,8 @@ if(os.getenv('SERVER_1_ENABLED', "false")=="true"):
     server['serv_gw_id'] = os.environ.get("SERVER_1_GWID")
     server['serv_gw_key'] = os.environ.get("SERVER_1_GWKEY")
   server['server_address'] = os.environ.get("SERVER_1_ADDRESS")
-  server['serv_port_up'] = int(os.environ.get("SERVER_1_PORTUP"))
-  server['serv_port_down'] = int(os.environ.get("SERVER_1_PORTDOWN"))
+  server['serv_port_up'] = int(os.getenv("SERVER_1_PORTUP", 1700))
+  server['serv_port_down'] = int(os.getenv("SERVER_1_PORTDOWN", 1700))
   server['serv_enabled'] = True
   if(os.getenv('SERVER_1_DOWNLINK', "false")=="true"):
     server['serv_down_enabled'] = True
@@ -240,8 +240,8 @@ if(os.getenv('SERVER_2_ENABLED', False)):
     server['serv_gw_id'] = os.environ.get("SERVER_2_GWID")
     server['serv_gw_key'] = os.environ.get("SERVER_2_GWKEY")
   server['server_address'] = os.environ.get("SERVER_2_ADDRESS")
-  server['serv_port_up'] = int(os.environ.get("SERVER_2_PORTUP"))
-  server['serv_port_down'] = int(os.environ.get("SERVER_2_PORTDOWN"))
+  server['serv_port_up'] = int(os.getenv("SERVER_2_PORTUP", 1700))
+  server['serv_port_down'] = int(os.getenv("SERVER_2_PORTDOWN", 1700))
   server['serv_enabled'] = True
   if(os.getenv('SERVER_2_DOWNLINK', "false")=="true"):
     server['serv_down_enabled'] = True
@@ -256,8 +256,8 @@ if(os.getenv('SERVER_3_ENABLED', False)):
     server['serv_gw_id'] = os.environ.get("SERVER_3_GWID")
     server['serv_gw_key'] = os.environ.get("SERVER_3_GWKEY")
   server['server_address'] = os.environ.get("SERVER_3_ADDRESS")
-  server['serv_port_up'] = int(os.environ.get("SERVER_3_PORTUP"))
-  server['serv_port_down'] = int(os.environ.get("SERVER_3_PORTDOWN"))
+  server['serv_port_up'] = int(os.getenv("SERVER_3_PORTUP", 1700))
+  server['serv_port_down'] = int(os.getenv("SERVER_3_PORTDOWN", 1700))
   server['serv_enabled'] = True
   if(os.getenv('SERVER_3_DOWNLINK', "false")=="true"):
     server['serv_down_enabled'] = True
