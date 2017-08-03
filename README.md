@@ -80,7 +80,7 @@ IMST backplane or Lite gateway<br />https://wireless-solutions.de/products/long-
 
 If you get the message
 `ERROR: [main] failed to start the concentrator`
-after resin.io is finished downloading the application, or when restarting the gateway, it most likely means the `GW_RESET_PIN` you defined is incorrect.
+after resin.io is finished downloading the application, or when restarting the gateway, it most likely means the `GW_RESET_PIN` you defined is incorrect. Alternatively the problem can be caused by the hardware, typically for the `IMST iC880A-SPI` board with insufficient voltage, try another power supply or slightly increase the voltage.
 
 
 ## Special note for using the LinkLabs gateway on a Raspberry Pi 3
