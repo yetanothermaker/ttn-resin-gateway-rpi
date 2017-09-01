@@ -76,6 +76,7 @@ ch2i<br />https://github.com/ch2i/iC880A-Raspberry-PI | 11
 Linklabs Rasberry Pi Hat<br />https://www.amazon.co.uk/868-MHz-LoRaWAN-RPi-Shield/dp/B01G7G54O2 | 29 (untested)
 Rising HF Board<br />http://www.risinghf.com/product/risinghf-iot-dicovery/?lang=en | 26
 IMST backplane or Lite gateway<br />https://wireless-solutions.de/products/long-range-radio/lora_lite_gateway.html | 29 (untested)
+Coredump backplane<br />https://github.com/dbrgn/ic880a-backplane/<br />https://shop.coredump.ch/product/ic880a-lorawan-gateway-backplane/ | 22
 
 
 If you get the message
