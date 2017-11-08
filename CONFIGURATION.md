@@ -1,10 +1,10 @@
-#Environment Variables
-##Required global variables
+# Environment Variables
+## Required global variables
 * GW_ID required
 * GW_KEY required
   This gateway ID and gateway Key for TTN will be used to fetch the gateway's information form the TTN console. When SERVER_TTN is true, this will also be used to conenct and forward packets to TTN.
 
-##Optional global variables
+## Optional global variables
 * GW_CONTACT_EMAIL optional - default an empty string
   The gateway owner's contact information. Will be overridden by the value from the TTN console.
 * GW_DESCRIPTION optional - default an empty string
@@ -32,7 +32,7 @@
 * GW_ANTENNA_GAIN optional - default 0.
   Set this to the dBd gain of your antenna. The dBd value is the dBi value minus 2.15dB, ie. dBd = dBi-2.15. This is used to reduce the TX power of the concentrator to stay within the legal limits.
 
-##Server variables
+## Server variables
 All server variables are optional, but when a server is enabled, it is recommended to set all variables to configure it completely.
 * SERVER_TTN optional - default true
   Should the gateway connect to the TTN backend
@@ -68,7 +68,7 @@ All server variables are optional, but when a server is enabled, it is recommend
 
 Use `true` and `false` as lower case words to enable or disable features via environment variables. Any other format will not be interpreted correctly.
 
-#Logal debugging
+# Logal debugging
 ```
 docker run --device /dev/ttyAMA0:/dev/ttyAMA0 --device /dev/mem:/dev/mem --privileged -e GW_TYPE="imst-ic880a-spi" -e GW_DESCRIPTION="test gateway" -e GW_CONTACT_EMAIL="" -e GW_ID="" -e GW_KEY="" newforwarder
 
