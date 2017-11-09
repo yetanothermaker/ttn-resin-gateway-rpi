@@ -59,10 +59,13 @@ if os.environ.get("GW_KEY")==None:
   print ("See https://www.thethingsnetwork.org/docs/gateways/registration.html#via-gateway-connector")
   sys.exit(0)
 
-# The FFFE should be inserted in the middle (so xxxxxxFFFExxxxxx)
-my_eui = format(uuid.getnode(), '012x')
-my_eui = my_eui[:6]+GWID_PREFIX+my_eui[6:]
-my_eui = my_eui.upper()
+if os.environ.get("GW_EUI")==None:
+  # The FFFE should be inserted in the middle (so xxxxxxFFFExxxxxx)
+  my_eui = format(uuid.getnode(), '012x')
+  my_eui = my_eui[:6]+GWID_PREFIX+my_eui[6:]
+  my_eui = my_eui.upper()
+else:
+  my_eui = os.environ.get("GW_EUI")
 
 print ("Gateway ID:\t"+os.environ.get("GW_ID"))
 print ("Gateway EUI:\t"+my_eui)
@@ -233,7 +236,7 @@ if(os.getenv('SERVER_1_ENABLED', "false")=="true"):
     server['serv_down_enabled'] = False
   gateway_conf['servers'].append(server)
 
-if(os.getenv('SERVER_2_ENABLED', False)):
+if(os.getenv('SERVER_2_ENABLED', "false")=="true"):
   server = {}
   if(os.getenv('SERVER_2_TYPE', "semtech")=="ttn"):
     server['serv_type'] = "ttn"
@@ -249,7 +252,7 @@ if(os.getenv('SERVER_2_ENABLED', False)):
     server['serv_down_enabled'] = False
   gateway_conf['servers'].append(server)
 
-if(os.getenv('SERVER_3_ENABLED', False)):
+if(os.getenv('SERVER_3_ENABLED', "false")=="true"):
   server = {}
   if(os.getenv('SERVER_3_TYPE', "semtech")=="ttn"):
     server['serv_type'] = "ttn"
