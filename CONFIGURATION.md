@@ -2,35 +2,37 @@
 ## Required global variables
 * GW_ID required
 * GW_KEY required
-  This gateway ID and gateway Key for TTN will be used to fetch the gateway's information form the TTN console. When SERVER_TTN is true, this will also be used to conenct and forward packets to TTN.
+  * This gateway ID and gateway Key for TTN will be used to fetch the gateway's information form the TTN console. When SERVER_TTN is true, this will also be used to conenct and forward packets to TTN.
 
 ## Optional global variables
-* GW_CONTACT_EMAIL optional - default an empty string
-  The gateway owner's contact information. Will be overridden by the value from the TTN console.
+* GW_EUI - by default an EUI will be generated from the Raspberry Pi's ethernet MAC address.
+  * The unique identifier for this gateway. It is used in LoRaWAN networks to identify where the packet was received and to address where a downlink packet needs to be sent from.
+* GW_CONTACT_EMAIL - default an empty string
+  * The gateway owner's contact information. Will be overridden by the value from the TTN console.
 * GW_DESCRIPTION optional - default an empty string
-  A description of this gateway. Will be overridden by the value from the TTN console.
+  * A description of this gateway. Will be overridden by the value from the TTN console.
 * GW_RESET_PIN - default 22
-  The physical pin number on the Raspberry Pi to which the concentrator's reset is connected. See the [README](README.md) file for a description and a list of common values.
+  * The physical pin number on the Raspberry Pi to which the concentrator's reset is connected. See the [README](README.md) file for a description and a list of common values.
 * GW_GPS optional - default False
   * If true, use the hardware GPS. 
   * If false, 
-    use either fake gps if a location was configured in the TTN console, 
-    otherwise try using fake gps with the reference location as set via environment variables, 
-    otherwise don't send coordinates. 
+    * use either fake gps if a location was configured in the TTN console, 
+    * otherwise try using fake gps with the reference location as set via environment variables, 
+    * otherwise don't send coordinates. 
 * GW_GPS_PORT optional - default /dev/ttyAMA0
-  The UART to which the hardware GPS is connected to.
+  * The UART to which the hardware GPS is connected to.
 * GW_REF_LATITUDE optional - default 0
-  The latitude to use for fake gps if the coordinates are not set in the TTN console.
+  * The latitude to use for fake gps if the coordinates are not set in the TTN console.
 * GW_REF_LONGITUDE optional - default 0
-  The longitude to use for fake gps if the coordinates are not set in the TTN console.
+  * The longitude to use for fake gps if the coordinates are not set in the TTN console.
 * GW_REF_ALTITUDE optional - default 0
-  The altitude to use for fake gps if the coordinates are not set in the TTN console.
+  * The altitude to use for fake gps if the coordinates are not set in the TTN console.
 * GW_FWD_CRC_ERR optional - default false
-  Forward packets with an invalid CRC.
+  * Forward packets with an invalid CRC.
 * GW_FWD_CRC_VAL optional - default true.
-  Forward packets with a valid CRC.
+  * Forward packets with a valid CRC.
 * GW_ANTENNA_GAIN optional - default 0.
-  Set this to the dBd gain of your antenna. The dBd value is the dBi value minus 2.15dB, ie. dBd = dBi-2.15. This is used to reduce the TX power of the concentrator to stay within the legal limits.
+  * Set this to the dBd gain of your antenna. The dBd value is the dBi value minus 2.15dB, ie. dBd = dBi-2.15. This is used to reduce the TX power of the concentrator to stay within the legal limits.
 
 ## Server variables
 All server variables are optional, but when a server is enabled, it is recommended to set all variables to configure it completely.
