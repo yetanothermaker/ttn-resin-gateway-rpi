@@ -94,9 +94,10 @@ Add a New config variable as follows:
 
 ### Application config variables
 
-Name      	            	   | Value  
+Name      	            	    | Value  
 ------------------------------|--------------------------  
 RESIN_HOST_CONFIG_core_freq   | 250
+RESIN_HOST_CONFIG_dtoverlay   | pi3-miniuart-bt
 
 ## TRANSFERRING TTN GATEWAY SOFTWARE TO RESIN SO THAT IT MAY BE DOWNLOADED ON YOUR DEVICES
 
