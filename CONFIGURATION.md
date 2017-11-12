@@ -33,6 +33,8 @@
   * Forward packets with a valid CRC.
 * GW_ANTENNA_GAIN optional - default 0.
   * Set this to the dBd gain of your antenna. The dBd value is the dBi value minus 2.15dB, ie. dBd = dBi-2.15. This is used to reduce the TX power of the concentrator to stay within the legal limits.
+* FREQ_PLAN_URL optional - default `https://account.thethingsnetwork.org/api/v2/frequency-plans/EU_863_870`
+  * The URL where the base configuration file and frequency plan should be downloaded from. This is overwritten by the URL given by the TTN account server when using the TTN gateway connector protocol.
 
 ## Server variables
 All server variables are optional, but when a server is enabled, it is recommended to set all variables to configure it completely.
@@ -65,6 +67,20 @@ All server variables are optional, but when a server is enabled, it is recommend
 * SERVER_3_GWID
 * SERVER_3_GWKEY
 * SERVER_3_DOWNLINK - default false
+
+## Example for using only legacy forwarder
+
+| Variable          | Value |
+| ----------------- | ----- |
+| SERVER_TTN        | false |
+| SERVER_1_ADDRESS  | bridge.eu.thethings.network |
+| SERVER_1_ENABLED  | true  |
+| SERVER_1_PORTDOWN | 1700  |
+| SERVER_1_PORTUP   | 1700  |
+| FREQ_PLAN_URL     | https://account.thethingsnetwork.org/api/v2/frequency-plans/EU_863_870 |
+| GW_REF_LATITUDE   | -33.1 |
+| GW_REF_LONGITUDE  | 18.9  |
+| GW_REF_ALTITUDE   | 190   |
 
 ## Note about boolean values
 
