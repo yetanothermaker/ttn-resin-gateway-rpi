@@ -49,16 +49,6 @@ print ("*******************")
 print ("*** Configuration:")
 print ("*******************")
 
-if os.environ.get("GW_ID")==None:
-  print ("ERROR: GW_ID required")
-  print ("See https://www.thethingsnetwork.org/docs/gateways/registration.html#via-gateway-connector")
-  sys.exit(0)
-
-if os.environ.get("GW_KEY")==None:
-  print ("ERROR: GW_KEY required")
-  print ("See https://www.thethingsnetwork.org/docs/gateways/registration.html#via-gateway-connector")
-  sys.exit(0)
-
 if os.environ.get("GW_EUI")==None:
   # The FFFE should be inserted in the middle (so xxxxxxFFFExxxxxx)
   my_eui = format(uuid.getnode(), '012x')
@@ -67,16 +57,6 @@ if os.environ.get("GW_EUI")==None:
 else:
   my_eui = os.environ.get("GW_EUI")
 
-print ("Gateway ID:\t"+os.environ.get("GW_ID"))
-print ("Gateway EUI:\t"+my_eui)
-print ("Gateway Key:\t"+os.environ.get("GW_KEY"))
-print ("Has hardware GPS:\t"+str(os.getenv('GW_GPS', False)))
-print ("Hardware GPS port:\t"+os.getenv('GW_GPS_PORT', "/dev/ttyAMA0"))
-
-
-print ("*******************")
-print ("*** Fetching config from TTN account server")
-print ("*******************")
 
 # Define default configs
 description = os.getenv('GW_DESCRIPTION', "")
@@ -88,6 +68,21 @@ frequency_plan_url = os.getenv('FREQ_PLAN_URL', "https://account.thethingsnetwor
 
 # Fetch config from TTN if TTN is enabled
 if(os.getenv('SERVER_TTN', "true")=="true"):
+
+  if os.environ.get("GW_ID")==None:
+    print ("ERROR: GW_ID required")
+    print ("See https://www.thethingsnetwork.org/docs/gateways/registration.html#via-gateway-connector")
+    sys.exit(0)
+
+  if os.environ.get("GW_KEY")==None:
+    print ("ERROR: GW_KEY required")
+    print ("See https://www.thethingsnetwork.org/docs/gateways/registration.html#via-gateway-connector")
+    sys.exit(0)
+
+  print ("*******************")
+  print ("*** Fetching config from TTN account server")
+  print ("*******************")
+
   # Fetch the URL, if it fails try 30 seconds later again.
   config_response = ""
   try:
@@ -133,14 +128,13 @@ if(os.getenv('SERVER_TTN', "true")=="true"):
         fallback_routers.append(fb_router["mqtt_address"])
 
 
-  print ("Router:\t\t\t"+router)
+  print ("Gateway ID:\t"+os.environ.get("GW_ID"))
+  print ("Gateway Key:\t"+os.environ.get("GW_KEY"))
   print ("Frequency plan:\t\t"+frequency_plan)
   print ("Frequency plan url:\t"+frequency_plan_url)
   print ("Gateway description:\t"+description)
   print ("Gateway placement:\t"+placement)
-  print ("Latitude:\t\t"+str(latitude))
-  print ("Longitude:\t\t"+str(longitude))
-  print ("Altitude:\t\t"+str(altitude))
+  print ("Router:\t\t\t"+router)
   print ("")
   print ("Fallback routers:")
   for fb_router in fallback_routers:
@@ -148,6 +142,15 @@ if(os.getenv('SERVER_TTN', "true")=="true"):
 # Done fetching config from TTN
 else:
   print ("TTN gateway connector disabled. Not fetching config from account server.")
+
+print ("Latitude:\t\t"+str(latitude))
+print ("Longitude:\t\t"+str(longitude))
+print ("Altitude:\t\t"+str(altitude))
+print ("Gateway EUI:\t"+my_eui)
+print ("Has hardware GPS:\t"+str(os.getenv('GW_GPS', False)))
+print ("Hardware GPS port:\t"+os.getenv('GW_GPS_PORT', "/dev/ttyAMA0"))
+
+
 
 # Retrieve global_conf
 sx1301_conf = {}
