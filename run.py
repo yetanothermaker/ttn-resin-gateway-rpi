@@ -221,6 +221,22 @@ if(os.getenv('SERVER_TTN', "true")=="true"):
   server['serv_gw_key'] = os.environ.get("GW_KEY")
   server['serv_enabled'] = True
   gateway_conf['servers'].append(server)
+else:
+  if(os.getenv('SERVER_0_ENABLED', "false")=="true"):
+    server = {}
+    if(os.getenv('SERVER_0_TYPE', "semtech")=="ttn"):
+      server['serv_type'] = "ttn"
+      server['serv_gw_id'] = os.environ.get("SERVER_0_GWID")
+      server['serv_gw_key'] = os.environ.get("SERVER_0_GWKEY")
+    server['server_address'] = os.environ.get("SERVER_0_ADDRESS")
+    server['serv_port_up'] = int(os.getenv("SERVER_0_PORTUP", 1700))
+    server['serv_port_down'] = int(os.getenv("SERVER_0_PORTDOWN", 1700))
+    server['serv_enabled'] = True
+    if(os.getenv('SERVER_0_DOWNLINK', "false")=="true"):
+      server['serv_down_enabled'] = True
+    else:
+      server['serv_down_enabled'] = False
+    gateway_conf['servers'].append(server)
 
 # Add up to 3 additional servers
 if(os.getenv('SERVER_1_ENABLED', "false")=="true"):

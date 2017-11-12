@@ -68,6 +68,16 @@ All server variables are optional, but when a server is enabled, it is recommend
 * SERVER_3_GWKEY
 * SERVER_3_DOWNLINK - default false
 
+As long as `SERVER_TTN` is set to false, you can also:
+* SERVER_0_ENABLED optional - default false
+* SERVER_0_TYPE - default "semtech"
+* SERVER_0_ADDRESS
+* SERVER_0_PORTUP - only when using type semtech
+* SERVER_0_PORTDOWN - only when using type semtech
+* SERVER_0_GWID
+* SERVER_0_GWKEY
+* SERVER_0_DOWNLINK - default false
+
 ## Example for using only legacy forwarder
 
 | Variable          | Value |
