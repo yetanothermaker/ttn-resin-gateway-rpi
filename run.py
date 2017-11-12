@@ -84,10 +84,10 @@ placement = ""
 latitude = os.getenv('GW_REF_LATITUDE', 0)
 longitude = os.getenv('GW_REF_LONGITUDE', 0)
 altitude = os.getenv('GW_REF_ALTITUDE', 0)
-frequency_plan_url = "https://account.thethingsnetwork.org/api/v2/frequency-plans/EU_863_870"
+frequency_plan_url = os.getenv('FREQ_PLAN_URL', "https://account.thethingsnetwork.org/api/v2/frequency-plans/EU_863_870")
 
 # Fetch config from TTN if TTN is enabled
-if(os.getenv('SERVER_TTN', True)):
+if(os.getenv('SERVER_TTN', "true")=="true"):
   # Fetch the URL, if it fails try 30 seconds later again.
   config_response = ""
   try:
@@ -146,7 +146,8 @@ if(os.getenv('SERVER_TTN', True)):
   for fb_router in fallback_routers:
     print ("\t"+fb_router)
 # Done fetching config from TTN
-
+else:
+  print ("TTN gateway connector disabled. Not fetching config from account server.")
 
 # Retrieve global_conf
 sx1301_conf = {}
@@ -169,17 +170,16 @@ gateway_conf['gateway_ID'] = my_eui
 gateway_conf['contact_email'] = os.getenv('GW_CONTACT_EMAIL', "")
 gateway_conf['description'] = description
 
-if(os.getenv('GW_FWD_CRC_ERR', False)=="true"):
+if(os.getenv('GW_FWD_CRC_ERR', "false")=="true"):
   #default is False
   gateway_conf['forward_crc_error'] = True
 
-if(os.getenv('GW_FWD_CRC_VAL', True)=="false"):
+if(os.getenv('GW_FWD_CRC_VAL', "true")=="false"):
   #default is True
   gateway_conf['forward_crc_valid'] = False
 
 # Parse GW_GPS env var. It is a string, we need a boolean.
-gw_gps = os.getenv('GW_GPS', False)
-if(gw_gps=="true"):
+if(os.getenv('GW_GPS', "false")=="true"):
   gw_gps = True
 else:
   gw_gps = False
@@ -209,7 +209,7 @@ else:
 gateway_conf['servers'] = []
 
 # Add TTN server
-if(os.getenv('SERVER_TTN', True)!="false"):
+if(os.getenv('SERVER_TTN', "true")=="true"):
   server = {}
   server['serv_type'] = "ttn"
   server['server_address'] = router
