@@ -17,7 +17,7 @@ fi
 cd ..
 
 if [ ! -d lora_gateway ]; then
-    git clone https://github.com/kersing/lora_gateway.git  || { echo 'Cloning lora_gateway failed.' ; exit 1; }
+    git clone https://github.com/yetanothermaker/lora_gateway.git  || { echo 'Cloning lora_gateway failed.' ; exit 1; }
 else
     cd lora_gateway
     git reset --hard
